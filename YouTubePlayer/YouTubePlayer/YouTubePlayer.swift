@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 public enum YouTubePlayerState: String {
     case Unstarted = "-1"
@@ -82,12 +83,12 @@ public func videoIDFromYouTubeURL(_ videoURL: URL) -> String? {
 }
 
 /** Embed and control YouTube videos */
-open class YouTubePlayerView: UIView, UIWebViewDelegate {
+open class YouTubePlayerView: UIView, WKNavigationDelegate {
     
     public typealias YouTubePlayerParameters = [String: AnyObject]
     public var baseURL = "about:blank"
-    
-    fileprivate var webView: UIWebView!
+    public let vevoURL = "https://www.youtube.com/"
+    fileprivate var webView: WKWebView!
     
     /** The readiness of the player */
     fileprivate(set) open var ready = false
@@ -130,13 +131,14 @@ open class YouTubePlayerView: UIView, UIWebViewDelegate {
     // MARK: Web view initialization
     
     fileprivate func buildWebView(_ parameters: [String: AnyObject]) {
-        webView = UIWebView()
+        webView = WKWebView()
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
-        webView.allowsInlineMediaPlayback = true
-        webView.mediaPlaybackRequiresUserAction = false
-        webView.delegate = self
+        webView.navigationDelegate = self
         webView.scrollView.isScrollEnabled = false
+        webView.configuration.allowsInlineMediaPlayback = true
+        webView.configuration.mediaPlaybackRequiresUserAction = true
+
     }
     
     
@@ -195,11 +197,13 @@ open class YouTubePlayerView: UIView, UIWebViewDelegate {
     }
     
     open func getDuration() -> String? {
-        return evaluatePlayerCommand("getDuration()")
+        return ""
+        //        return evaluatePlayerCommand("getDuration()")
     }
     
     open func getCurrentTime() -> String? {
-        return evaluatePlayerCommand("getCurrentTime()")
+        return ""
+        //        return evaluatePlayerCommand("getCurrentTime()")
     }
     
     // MARK: Playlist controls
@@ -212,9 +216,9 @@ open class YouTubePlayerView: UIView, UIWebViewDelegate {
         evaluatePlayerCommand("nextVideo()")
     }
     
-    fileprivate func evaluatePlayerCommand(_ command: String) -> String? {
+    fileprivate func evaluatePlayerCommand(_ command: String) {
         let fullCommand = "player." + command + ";"
-        return webView.stringByEvaluatingJavaScript(from: fullCommand)
+        return webView.evaluateJavaScript(fullCommand, completionHandler: nil);
     }
     
     
@@ -232,7 +236,7 @@ open class YouTubePlayerView: UIView, UIWebViewDelegate {
         let htmlString = rawHTMLString.replacingOccurrences(of: "%@", with: jsonParameters)
         
         // Load HTML in web view
-        webView.loadHTMLString(htmlString, baseURL: URL(string: baseURL))
+        webView.loadHTMLString(htmlString, baseURL: URL(string: vevoURL))
     }
     
     fileprivate func playerHTMLPath() -> String {
@@ -286,7 +290,7 @@ open class YouTubePlayerView: UIView, UIWebViewDelegate {
             let jsonData = try JSONSerialization.data(withJSONObject: object, options: JSONSerialization.WritingOptions.prettyPrinted)
             
             // Succeeded
-            return NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) as? String
+            return NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) as String?
             
         } catch let jsonError {
             
@@ -338,17 +342,10 @@ open class YouTubePlayerView: UIView, UIWebViewDelegate {
         }
     }
     
-    
-    // MARK: UIWebViewDelegate
-    
-    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
-        let url = request.url
-        
-        // Check if ytplayer event and, if so, pass to handleJSEvent
-        if let url = url, url.scheme == "ytplayer" { handleJSEvent(url) }
-        
-        return true
+    // MARK: WKWebViewDelegate
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url, url.scheme == "ytplayer" { handleJSEvent(url) }
+        decisionHandler(.allow)
     }
 }
 

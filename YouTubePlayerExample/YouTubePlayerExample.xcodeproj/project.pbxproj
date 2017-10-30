@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BC0C4391FA6CDC70072C16D /* YouTubePlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC0C4331FA6B8EE0072C16D /* YouTubePlayer.framework */; };
+		2BC0C43A1FA6CDC70072C16D /* YouTubePlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC0C4331FA6B8EE0072C16D /* YouTubePlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50BB8AE81A7D914C00216B49 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB8AE71A7D914C00216B49 /* AppDelegate.swift */; };
 		50BB8AEA1A7D914C00216B49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB8AE91A7D914C00216B49 /* ViewController.swift */; };
 		50BB8AED1A7D914C00216B49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB8AEB1A7D914C00216B49 /* Main.storyboard */; };
@@ -14,7 +16,22 @@
 		50BB8AF21A7D914C00216B49 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BB8AF01A7D914C00216B49 /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2BC0C43B1FA6CDC70072C16D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2BC0C43A1FA6CDC70072C16D /* YouTubePlayer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		2BC0C4331FA6B8EE0072C16D /* YouTubePlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YouTubePlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB8AE21A7D914C00216B49 /* YouTubePlayerExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTubePlayerExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB8AE61A7D914C00216B49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50BB8AE71A7D914C00216B49 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -29,17 +46,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BC0C4391FA6CDC70072C16D /* YouTubePlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BC0C4311FA6B8EE0072C16D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BC0C4331FA6B8EE0072C16D /* YouTubePlayer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		50BB8AD91A7D914C00216B49 = {
 			isa = PBXGroup;
 			children = (
 				50BB8AE41A7D914C00216B49 /* YouTubePlayerExample */,
 				50BB8AE31A7D914C00216B49 /* Products */,
+				2BC0C4311FA6B8EE0072C16D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,6 +109,7 @@
 				50BB8ADE1A7D914C00216B49 /* Sources */,
 				50BB8ADF1A7D914C00216B49 /* Frameworks */,
 				50BB8AE01A7D914C00216B49 /* Resources */,
+				2BC0C43B1FA6CDC70072C16D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -104,6 +132,12 @@
 				TargetAttributes = {
 					50BB8AE11A7D914C00216B49 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = C7DKH754WR;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -252,10 +286,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = C7DKH754WR;
 				INFOPLIST_FILE = YouTubePlayerExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gilesvangruisen.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gilesvangruisen.YouTubePlayerExample959;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -263,10 +299,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = C7DKH754WR;
 				INFOPLIST_FILE = YouTubePlayerExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gilesvangruisen.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gilesvangruisen.YouTubePlayerExample959;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
